@@ -122,7 +122,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EfCoreDbContext.cs" />
+    <Compile Include="Entity\Blog.cs" />
+    <Compile Include="Entity\Customer.cs" />
     <Compile Include="Entity\Student.cs" />
+    <Compile Include="Mapping\BlogMapping.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

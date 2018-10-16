@@ -12,8 +12,8 @@ namespace EFCoreConsoleSample.Entity
         public int Id { get; set; }
         public int Age { get; set; }
         public byte Status { get; set; }
-        public string Name { get; set; }
-        public DateTime CreatedTime { get; set; }
+        public string Name { get; set; } 
+       // public DateTime CreatedTime { get; set; } 定义成狭隘属性
         public Int64 Int64 { get; set; }
         public float Float { get; set; }
         public double Double { get; set; }

@@ -22,12 +22,11 @@ namespace EFCoreConsoleSample
         {
             modelBuilder.Entity<Student>(entity =>
             {
-                //entity.ToTable("Students");
-                ////   entity.HasKey(t => t.Id);
-                //entity.HasKey(t => t.Guid);
-                //entity.Property(t => t.Guid);//Guid自动被映射成为uniqueidentifier， 如果加上.HasColomnType(varchar(36)),将被映射成varchar(36)
-                //entity.Property(t => t.CreatedTime).HasColumnType("DATETIME").HasDefaultValueSql("GETDATE()").ValueGeneratedOnAddOrUpdate();
-
+                entity.ToTable("Students");
+                //   entity.HasKey(t => t.Id);
+                entity.HasKey(t => t.Guid);
+                entity.Property(t => t.Guid);//Guid自动被映射成为uniqueidentifier， 如果加上.HasColomnType(varchar(36)),将被映射成varchar(36)
+                entity.Property<DateTime>("CreateTime");//定义CreateTime为狭隘属性
             });
             //自定义序列
             modelBuilder.Entity<Customer>()
@@ -44,21 +43,27 @@ namespace EFCoreConsoleSample
             modelBuilder.Entity<Customer>()
                         .Property(t => t.Name).HasColumnType("varchar(10)");
 
-            //var typesToRegister = Assembly.GetExecutingAssembly()
-            //                              .GetTypes()
-            //                              .Where(type => !String.IsNullOrEmpty(type.Namespace))
-            //                              .Where(type => type.BaseType != null && type.BaseType.IsGenericType && type.BaseType.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>));
-            //foreach (var type in typesToRegister)
-            //{
-            //    dynamic configurationInstance = Activator.CreateInstance(type);
-            //    modelBuilder.ApplyConfiguration<Blog>(configurationInstance);
-            //}
-            modelBuilder.ApplyConfiguration<Blog>(new BlogConfiguration());
+
+            //集中配置EntityMapping
+            foreach (var item in Assembly.GetExecutingAssembly().GetTypes())
+            {
+                if(item.GetInterfaces().Any(x =>x.GetTypeInfo().IsGenericType&& x.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>)))
+                {
+                 
+                        dynamic configurationInstance = Activator.CreateInstance(item);
+                        modelBuilder.ApplyConfiguration(configurationInstance);
+                  
+                }
+            }
+            //单个配置EntityMapping
+            //modelBuilder.ApplyConfiguration(new BlogConfiguration());
+            //modelBuilder.ApplyConfiguration(new CourseConfiguration());
             base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Student> Students { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Blog> Blogs { get; set; }
+        public DbSet<Course> Courses { get; set; }
     }
 }

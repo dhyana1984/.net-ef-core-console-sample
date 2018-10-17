@@ -20,6 +20,17 @@ namespace EFCoreConsoleSample
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //全局约定，设置表明
+            foreach (var item in modelBuilder.Model.GetEntityTypes())
+            {
+                modelBuilder.Totable("T_" + item.ClrType.Name);
+                //全局约定，设置字符串映射数据库最大长度
+                foreach (var property in item.GetProperties().Where(t=>t.ClrType==typeof(string)))
+                {
+                    property.SetMaxLength(50);
+                }
+            }
+        
             modelBuilder.Entity<Student>(entity =>
             {
                 entity.ToTable("Students");

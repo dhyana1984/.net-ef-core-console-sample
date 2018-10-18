@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Configuration;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace EFCoreConsoleSample
@@ -23,7 +24,7 @@ namespace EFCoreConsoleSample
             //全局约定，设置表明
             foreach (var item in modelBuilder.Model.GetEntityTypes())
             {
-                modelBuilder.Totable("T_" + item.ClrType.Name);
+                modelBuilder.Entity(item.Name).ToTable("T_" + item.ClrType.Name);
                 //全局约定，设置字符串映射数据库最大长度
                 foreach (var property in item.GetProperties().Where(t=>t.ClrType==typeof(string)))
                 {
@@ -69,6 +70,21 @@ namespace EFCoreConsoleSample
             //单个配置EntityMapping
             //modelBuilder.ApplyConfiguration(new BlogConfiguration());
             //modelBuilder.ApplyConfiguration(new CourseConfiguration());
+
+            //为实体统一配置继承ISoftDleteBaseEntity接口，具有IsDeleted属性的QueryFilter，并且设置IsDelete=true
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes()
+                                                   .Where(e => typeof(ISoftDleteBaseEntity).IsAssignableFrom(e.ClrType)))
+            {
+                modelBuilder.Entity(entityType.ClrType).Property<Boolean>("IsDeleted");
+                var parameter = Expression.Parameter(entityType.ClrType, "e");
+                var body = Expression.Equal(Expression.Call(typeof(EF), 
+                                            nameof(EF.Property), 
+                                            new[] { typeof(bool) }, 
+                                            parameter, 
+                                            Expression.Constant("IsDeleted")),
+                                            Expression.Constant(false));
+                modelBuilder.Entity(entityType.ClrType).HasQueryFilter(Expression.Lambda(body, parameter));
+            }
             base.OnModelCreating(modelBuilder);
         }
 

@@ -125,6 +125,7 @@
     <Compile Include="Entity\Blog.cs" />
     <Compile Include="Entity\Course.cs" />
     <Compile Include="Entity\Customer.cs" />
+    <Compile Include="Entity\ISoftDeleteBaseEntity.cs" />
     <Compile Include="Entity\Student.cs" />
     <Compile Include="Mapping\BlogMapping.cs" />
     <Compile Include="Mapping\CourseMapping.cs" />

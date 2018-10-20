@@ -14,8 +14,9 @@ namespace EFCoreConsoleSample
         {
             using (var context = new EfCoreDbContext())
             {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+                context.Database.Migrate(); //迁移后更新数据库
+                //context.Database.EnsureDeleted();
+                //context.Database.EnsureCreated();
 
                 //var student = new Student()
                 //{

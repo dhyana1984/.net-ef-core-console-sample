@@ -15,7 +15,7 @@ namespace EFCoreConsoleSample.Entity
             _url = url;
             _status = "Active";
         }
-
+        public string Name { get; set; }
         private string _status = string.Empty;
         public int Id { get; set; }
         private string _url;

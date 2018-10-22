@@ -1,8 +1,10 @@
 ﻿using EFCoreConsoleSample.Entity;
+using EFCoreConsoleSample.Utils;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,8 +17,8 @@ namespace EFCoreConsoleSample
             using (var context = new EfCoreDbContext())
             {
                 context.Database.Migrate(); //迁移后更新数据库
-                //context.Database.EnsureDeleted();
-                //context.Database.EnsureCreated();
+                                            //context.Database.EnsureDeleted();
+                                            //context.Database.EnsureCreated();
 
                 //var student = new Student()
                 //{
@@ -81,11 +83,29 @@ namespace EFCoreConsoleSample
 
                 //context.SaveChanges(); //修改时不会影响狭隘属性
 
-   
+               //查询元数据
+                var efType = context.Model.FindEntityType(typeof(Blog).FullName);
+                //获取Blog表名
+                var tbName = efType.Relational().TableName;
+                //获取属性
+                var properties = efType.GetProperties();
+                properties.ToList().ForEach(t => Console.WriteLine(t.Name));
+                //获取列名
+                 properties.ToList().ForEach(t => Console.WriteLine(efType.FindProperty(t.Name).Relational().ColumnName));
+
+                //使用封装的获取属性的lambda表达式
+                Expression<Func<Blog, string>> model = d => d.Name;
+                var propInfo = PropertyInfoHelper.GetPropertyInfoFromLambda(model);
+                //获取列名
+                var columnName = efType.FindProperty(propInfo.Name).Relational().ColumnName;
+                //获取列类型
+                var columnType = efType.FindProperty(propInfo.Name).Relational().ColumnType;
+                Console.WriteLine(columnName + " " + columnType);
             }
 
             Console.ReadLine();
         }
+
 
     }
 }

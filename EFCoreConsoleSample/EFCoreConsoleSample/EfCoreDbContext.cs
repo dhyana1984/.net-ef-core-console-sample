@@ -87,6 +87,19 @@ namespace EFCoreConsoleSample
             }
             base.OnModelCreating(modelBuilder);
         }
+        //批量新增方法，关闭ChangeTracker.AutoDetectChangesEnabled提高性能
+        public override int SaveChanges(bool acceptAllChangesOnsuccess)
+        {
+            ChangeTracker.DetectChanges();
+
+            foreach (var entry in ChangeTracker.Entries().Where(t=>t.State==EntityState.Added))
+            {
+                this.AddRange(entry.Entity);
+            }
+            ChangeTracker.AutoDetectChangesEnabled = false;
+            var result = base.SaveChanges(acceptAllChangesOnsuccess);
+            return result;
+        }
 
         public DbSet<Student> Students { get; set; }
         public DbSet<Customer> Customers { get; set; }

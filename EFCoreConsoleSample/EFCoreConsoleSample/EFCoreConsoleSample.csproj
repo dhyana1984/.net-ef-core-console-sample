@@ -139,9 +139,19 @@
     <Compile Include="Migrations\20181019063306_Initial.designer.cs">
       <DependentUpon>20181019063306_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20181022153734_BlogName.cs" />
+    <Compile Include="Migrations\20181022153734_BlogName.designer.cs">
+      <DependentUpon>20181022153734_BlogName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20181022154404_BlogNameProperty.cs" />
+    <Compile Include="Migrations\20181022154404_BlogNameProperty.designer.cs">
+      <DependentUpon>20181022154404_BlogNameProperty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\EfCoreDbContextModelSnapshot.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\ExecuteValidationHelper.cs" />
+    <Compile Include="Utils\PropertyInfoHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

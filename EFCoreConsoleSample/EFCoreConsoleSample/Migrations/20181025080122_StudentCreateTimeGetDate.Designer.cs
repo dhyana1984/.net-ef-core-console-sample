@@ -4,14 +4,16 @@ using EFCoreConsoleSample;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EFCoreConsoleSample.Migrations
 {
     [DbContext(typeof(EfCoreDbContext))]
-    partial class EfCoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181025080122_StudentCreateTimeGetDate")]
+    partial class StudentCreateTimeGetDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,8 +65,6 @@ namespace EFCoreConsoleSample.Migrations
 
                     b.Property<string>("Introduce")
                         .HasMaxLength(50);
-
-                    b.Property<DateTime>("ModifyTime");
 
                     b.Property<string>("Name")
                         .HasMaxLength(50);

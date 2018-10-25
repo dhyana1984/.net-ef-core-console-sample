@@ -16,6 +16,7 @@ namespace EFCoreConsoleSample.Mapping
             builder.ToTable("Courses");
 
             builder.Property<DateTime>("CreateTime");//设置 CreateTime为狭隘属性
+            builder.Property(t => t.ModifyTime);
         }
     }
 }

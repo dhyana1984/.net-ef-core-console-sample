@@ -11,12 +11,17 @@ namespace EFCoreConsoleSample
 {
     public  class EfCoreDbContext :DbContext
     {
-        //EFCore需要重写OnConfiguring
-        protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
+        //EFCore需要重写OnConfiguring创建上下文
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
+        //{
+        //    //ConfigurationManager需要引用System.Configuration.dll
+        //    optionBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["EFCoreConnectionString"].ConnectionString);
+
+        //}
+
+        public EfCoreDbContext(DbContextOptions options):base(options)
         {
-            //ConfigurationManager需要引用System.Configuration.dll
-            optionBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["EFCoreConnectionString"].ConnectionString);
-            
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -38,7 +43,7 @@ namespace EFCoreConsoleSample
                 //   entity.HasKey(t => t.Id);
                 entity.HasKey(t => t.Guid);
                 entity.Property(t => t.Guid);//Guid自动被映射成为uniqueidentifier， 如果加上.HasColomnType(varchar(36)),将被映射成varchar(36)
-                entity.Property<DateTime>("CreateTime");//定义CreateTime为狭隘属性
+                entity.Property<DateTime>("CreateTime").HasDefaultValueSql("getdate()");//定义CreateTime为狭隘属性
             });
             //自定义序列
             modelBuilder.Entity<Customer>()
@@ -88,18 +93,18 @@ namespace EFCoreConsoleSample
             base.OnModelCreating(modelBuilder);
         }
         //批量新增方法，关闭ChangeTracker.AutoDetectChangesEnabled提高性能
-        public override int SaveChanges(bool acceptAllChangesOnsuccess)
-        {
-            ChangeTracker.DetectChanges();
+        //public override int SaveChanges(bool acceptAllChangesOnsuccess)
+        //{
+        //    ChangeTracker.DetectChanges();
 
-            foreach (var entry in ChangeTracker.Entries().Where(t=>t.State==EntityState.Added))
-            {
-                this.AddRange(entry.Entity);
-            }
-            ChangeTracker.AutoDetectChangesEnabled = false;
-            var result = base.SaveChanges(acceptAllChangesOnsuccess);
-            return result;
-        }
+        //    foreach (var entry in ChangeTracker.Entries().Where(t=>t.State==EntityState.Added))
+        //    {
+        //        this.AddRange(entry.Entity);
+        //    }
+        //    ChangeTracker.AutoDetectChangesEnabled = false;
+        //    var result = base.SaveChanges(acceptAllChangesOnsuccess);
+        //    return result;
+        //}
 
         public DbSet<Student> Students { get; set; }
         public DbSet<Customer> Customers { get; set; }

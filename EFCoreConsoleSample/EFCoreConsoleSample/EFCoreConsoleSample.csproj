@@ -127,6 +127,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DesignTimeDbContextFactory.cs" />
     <Compile Include="EfCoreDbContext.cs" />
     <Compile Include="Entity\Blog.cs" />
     <Compile Include="Entity\Course.cs" />
@@ -146,6 +147,14 @@
     <Compile Include="Migrations\20181022154404_BlogNameProperty.cs" />
     <Compile Include="Migrations\20181022154404_BlogNameProperty.designer.cs">
       <DependentUpon>20181022154404_BlogNameProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20181025080122_StudentCreateTimeGetDate.cs" />
+    <Compile Include="Migrations\20181025080122_StudentCreateTimeGetDate.designer.cs">
+      <DependentUpon>20181025080122_StudentCreateTimeGetDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20181025080508_CourseModifyTime.cs" />
+    <Compile Include="Migrations\20181025080508_CourseModifyTime.designer.cs">
+      <DependentUpon>20181025080508_CourseModifyTime.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\EfCoreDbContextModelSnapshot.cs" />
     <Compile Include="Program.cs" />

@@ -11,5 +11,6 @@ namespace EFCoreConsoleSample.Entity
         public int Id { get; set; }
         public string Introduce { get; set; }
         public string Name { get; set; }
+        public DateTime ModifyTime { get; set; }
     }
 }

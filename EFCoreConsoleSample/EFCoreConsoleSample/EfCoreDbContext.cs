@@ -26,7 +26,7 @@ namespace EFCoreConsoleSample
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //全局约定，设置表明
+            //全局约定，设置表名
             foreach (var item in modelBuilder.Model.GetEntityTypes())
             {
                 modelBuilder.Entity(item.Name).ToTable("T_" + item.ClrType.Name);
@@ -76,7 +76,7 @@ namespace EFCoreConsoleSample
             //modelBuilder.ApplyConfiguration(new BlogConfiguration());
             //modelBuilder.ApplyConfiguration(new CourseConfiguration());
 
-            //为实体统一配置继承ISoftDleteBaseEntity接口，具有IsDeleted属性的QueryFilter，并且设置IsDelete=true
+            //为实体统一配置继承ISoftDleteBaseEntity接口，具有IsDeleted属性的QueryFilter，并且设置IsDelete=false
             foreach (var entityType in modelBuilder.Model.GetEntityTypes()
                                                    .Where(e => typeof(ISoftDleteBaseEntity).IsAssignableFrom(e.ClrType)))
             {
@@ -110,5 +110,6 @@ namespace EFCoreConsoleSample
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<Post> Posts { get; set; }
     }
 }

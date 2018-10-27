@@ -129,13 +129,16 @@
   <ItemGroup>
     <Compile Include="DesignTimeDbContextFactory.cs" />
     <Compile Include="EfCoreDbContext.cs" />
+    <Compile Include="Entity\BaseEntity.cs" />
     <Compile Include="Entity\Blog.cs" />
     <Compile Include="Entity\Course.cs" />
     <Compile Include="Entity\Customer.cs" />
     <Compile Include="Entity\ISoftDeleteBaseEntity.cs" />
+    <Compile Include="Entity\Post.cs" />
     <Compile Include="Entity\Student.cs" />
     <Compile Include="Mapping\BlogMapping.cs" />
     <Compile Include="Mapping\CourseMapping.cs" />
+    <Compile Include="Mapping\PostMapping.cs" />
     <Compile Include="Migrations\20181019063306_Initial.cs" />
     <Compile Include="Migrations\20181019063306_Initial.designer.cs">
       <DependentUpon>20181019063306_Initial.cs</DependentUpon>
@@ -159,8 +162,11 @@
     <Compile Include="Migrations\EfCoreDbContextModelSnapshot.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\Repository.cs" />
     <Compile Include="Utils\ExecuteValidationHelper.cs" />
     <Compile Include="Utils\PropertyInfoHelper.cs" />
+    <Compile Include="Utils\TenantProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

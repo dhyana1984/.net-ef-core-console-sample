@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EFCoreConsoleSample.Entity
 {
-  public  class Blog
+    public class Blog : BaseEntity, ISoftDleteBaseEntity
     {
         private Blog() { }
 
@@ -17,10 +17,11 @@ namespace EFCoreConsoleSample.Entity
         }
         public string Name { get; set; }
         private string _status = string.Empty;
-        public int Id { get; set; }
         private string _url;
         public string URL => _url;
         public DateTime CreateTime { get; set; }
         public DateTime ModifyTime { get; set; }
+        public IEnumerable<Post> Posts {get;set;}
+        public bool IsDeleted { get ; set ; }
     }
 }
